@@ -10,17 +10,22 @@ function CoinTracker(){
     const [Coins, setCoins] = useState([]);
 
     useEffect(()=>{
-        setTimeout( ()=>{
-            fetch("https://api.coinpaprika.com/v1/tickers").then(
-                (response)=>response.json()
-            ).then(
-                (jsonData)=>{
-                    setCoins(jsonData);
-                    setData(jsonData);
-                    setLoading(false);
-                }
-            )
-        }, 0 );
+        (async function(){ //fetch 연습
+            let res = await fetch("https://goongam.github.io/data.json");
+            let data1 = await res.json();
+            console.log(data1);
+        })();
+        
+        fetch("https://api.coinpaprika.com/v1/tickers").then(
+            (response)=>response.json()
+        ).then(
+            (jsonData)=>{
+                setCoins(jsonData);
+                setData(jsonData);
+                setLoading(false);
+            }
+        );
+        
     },[]);
 
     function coinSortByPriceASC(){
