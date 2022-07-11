@@ -3,6 +3,7 @@
 import './App.css';
 import { useMemo, useState, memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import CoinTracker from './Component/CoinTracker';
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -22,9 +23,10 @@ function App() {
     <h2>ToDo List({todoList.length})</h2>
     <input type="text" onChange={inputChange} value={inputTodo} ></input>
     <button onClick={ addTodoList }>ADD</button>
-    
+    <hr />
     <ShowTodoList todoList={todoList} setTodoList={setTodoList}/>
-
+    <hr />
+    <CoinTracker />
    </div>
   );
 }
