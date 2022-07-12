@@ -1,0 +1,24 @@
+.log{
+    margin: 4px;
+}
+
+#logBox{
+    border: 3px solid lightblue;
+    width: 400px;
+    height: 100px;
+    text-align: center;
+    background-color: violet;
+}
+
+.rare{
+    color:black;
+}
+.epic{
+    color:purple;
+}
+.unique{
+    color:yellow;
+}
+.legend{
+    color:green;
+}

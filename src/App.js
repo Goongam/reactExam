@@ -4,6 +4,7 @@ import './App.css';
 import { useMemo, useState, memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CoinTracker from './Component/CoinTracker';
+import CubeSimul from './Component/CubeSimul';
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -26,7 +27,13 @@ function App() {
     <hr />
     <ShowTodoList todoList={todoList} setTodoList={setTodoList}/>
     <hr />
+    <CubeSimul />
+    <hr />
     <CoinTracker />
+    <hr />
+   
+   
+   
    </div>
   );
 }
