@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/reactExam/static/css/main.879110f6.css",
+    "main.js": "/reactExam/static/js/main.5365b763.js",
+    "index.html": "/reactExam/index.html",
+    "main.879110f6.css.map": "/reactExam/static/css/main.879110f6.css.map",
+    "main.5365b763.js.map": "/reactExam/static/js/main.5365b763.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.879110f6.css",
+    "static/js/main.5365b763.js"
+  ]
+}
