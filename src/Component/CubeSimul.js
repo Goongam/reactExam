@@ -5,13 +5,14 @@ const CubeColor = {
     'rare': 'lightblue',
     'epic': 'purple',
     'unique': 'yellow',
-    'legend':'green'
+    'legendary':'green'
 };
-const GRADE = ['rare','epic','unique','legend'];
-const chance = {
-    'jangin':{'rare':4.7619,'epic':1.1858,'unique':0},
-    'myung':{'rare':7.9994,'epic':1.6959,'unique':0.1996},
-};
+const GRADE = ['rare','epic','unique','legendary'];
+const cubes = {'jangin':{'name':'장인', 'value':'jangin','meso':14_000_000,'chance':{'rare':4.7619,'epic':1.1858,'unique':0}},
+                'myung':{'name':'명장', 'value':'myung','meso':30_000_000,'chance':{'rare':7.9994,'epic':1.6959,'unique':0.1996}},
+                'red':{'name':'레드', 'value':'red','meso':34_000_000,'chance':{'rare':6.0000,'epic':1.8000,'unique':0.3000}},
+                'black':{'name':'블랙', 'value':'black','meso':55_000_000,'chance':{'rare':15.0000,'epic':3.5000,'unique':1.2000}}};
+
 function CubeSimul(){
 
     const [color, setColor] = useState('lightblue');
@@ -21,20 +22,25 @@ function CubeSimul(){
     const [usedCount, setUsedCount] = useState(0);
     const [selectedCube, setSelectedCube] = useState('jangin');
     const [isMiracle, setMiracle] = useState(false);
+    const [usedMeso, setUsedMeso] = useState(0);
+
 
     function clickGo(){
-        if(cubeGrade === 'legend') return;
+        if(cubeGrade === 'legendary') return;
         setUsedCount(usedCount+1);
+
+        setUsedMeso((prevMeso)=>prevMeso+cubes[selectedCube].meso);
+
         const random = Math.random() * 100;
         console.log(random)
-        let cubeChance = chance[selectedCube][cubeGrade];
+        let cubeChance = cubes[selectedCube].chance[cubeGrade];
         if(isMiracle) cubeChance *= 2;
         if(random <= cubeChance) { //등급업 성공
 
             setLogs( (prev) => 
                 [...prev,{
                     'grade':GRADE[ GRADE.indexOf(cubeGrade) + 1],
-                    'message':`${GRADE[ GRADE.indexOf(cubeGrade) + 1]}으로 등급업!`
+                    'message':`${GRADE[ GRADE.indexOf(cubeGrade) + 1]}(으)로 등급업!(누적 ${usedCount+1}개, ${(usedMeso+cubes[selectedCube].meso).toLocaleString('ko-KR')}메소)`
                 }]
             )
 
@@ -44,10 +50,12 @@ function CubeSimul(){
         }
     }
 
+
     function clickReset(){
         setCubeGrade(selectedGrade);
         setLogs([]);
         setUsedCount(0);
+        setUsedMeso(0);
     }
 
     function changeGrade(e){
@@ -72,14 +80,17 @@ function CubeSimul(){
                 <option value={'rare'}>레어</option>
                 <option value={'epic'}>에픽</option>
                 <option value={'unique'}>유니크</option>
-                <option value={'legend'}>레전</option>
+                <option value={'legendary'}>레전</option>
             </select>
      
             <br />
             큐브
             <select onChange={changeCube}>
-                <option value={'jangin'}>장인</option>
-                <option value={'myung'}>명장</option>
+                {
+                    Object.values(cubes).map(((cube, index)=>
+                    <option key={index} value={cube.value}>{cube.name}</option>))
+                }
+                
             </select>
             <br />
             미라클
@@ -87,13 +98,10 @@ function CubeSimul(){
             <br />
             <button onClick={clickGo}>GO</button>
             <button onClick={clickReset}>RESET</button>
-            <span> {usedCount}개/{0}메소/등급업확률(
-                { isMiracle ? chance[selectedCube][cubeGrade] *2 
-                : chance[selectedCube][cubeGrade] }%)</span>
+            <span> {usedCount}개/{usedMeso.toLocaleString('ko-KR')}메소/등급업확률(
+                { isMiracle ? (cubes[selectedCube].chance[cubeGrade] ?? 0 )* 2 
+                : cubes[selectedCube].chance[cubeGrade] ?? 0 }%)</span>
             <div id="logBox" style={{'border-color': color}} >
-                {/* <h5 className="log">레전드리 등급업! 0개 / 0메소</h5>
-                <h5 className="log">레전드리 등급업! 0개 / 0메소</h5>
-                <h5 className="log">레전드리 등급업! 0개 / 0메소</h5> */}
                 {logs.map((log, index)=>
                     <h5 className={"log "+log.grade} key={index}>{log.message}</h5>
                 )}

@@ -1,5 +1,5 @@
 .log{
-    margin: 4px;
+    margin: 10px;
 }
 
 #logBox{
@@ -7,7 +7,9 @@
     width: 400px;
     height: 100px;
     text-align: center;
-    background-color: violet;
+    background-color: cornflowerblue;
+    /* text-shadow: 1px 1px 3px; */
+    /* font-size: 5px; */
 }
 
 .rare{
@@ -19,6 +21,7 @@
 .unique{
     color:yellow;
 }
-.legend{
+.legendary{
     color:green;
+    text-shadow: 1px 1px 2px white;
 }
