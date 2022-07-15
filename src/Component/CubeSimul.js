@@ -23,13 +23,13 @@ function CubeSimul(){
     const [selectedCube, setSelectedCube] = useState('jangin');
     const [isMiracle, setMiracle] = useState(false);
     const [usedMeso, setUsedMeso] = useState(0);
-
+    const [cubePrice, setCubePrice] = useState(0);
 
     function clickGo(){
         if(cubeGrade === 'legendary') return;
         setUsedCount(usedCount+1);
 
-        setUsedMeso((prevMeso)=>prevMeso+cubes[selectedCube].meso);
+        setUsedMeso((prevMeso)=>prevMeso+cubePrice);
 
         const random = Math.random() * 100;
         console.log(random)
@@ -40,11 +40,11 @@ function CubeSimul(){
             setLogs( (prev) => 
                 [...prev,{
                     'grade':GRADE[ GRADE.indexOf(cubeGrade) + 1],
-                    'message':`${GRADE[ GRADE.indexOf(cubeGrade) + 1]}(으)로 등급업!(누적 ${usedCount+1}개, ${(usedMeso+cubes[selectedCube].meso).toLocaleString('ko-KR')}메소)`
+                    'message':`${GRADE[ GRADE.indexOf(cubeGrade) + 1]}(으)로 등급업!(누적 ${usedCount+1}개, ${(usedMeso+cubePrice).toLocaleString('ko-KR')}메소)`
                 }]
             )
 
-
+            
             setCubeGrade(GRADE[ GRADE.indexOf(cubeGrade) + 1]);
             
         }
@@ -68,6 +68,10 @@ function CubeSimul(){
     function changeMiracle(e){
         setMiracle(e.target.checked);
     }
+    function changeCubePrice(e){
+        setCubePrice(+e.target.value);
+    }
+
 
     useEffect(()=>{
         setColor(CubeColor[cubeGrade]);
@@ -96,12 +100,14 @@ function CubeSimul(){
             미라클
             <input type="checkbox" onChange={changeMiracle} checked={isMiracle}/>
             <br />
+            큐브 가격<input type={"number"} value={cubePrice} onChange={changeCubePrice} />
+            <br />
             <button onClick={clickGo}>GO</button>
             <button onClick={clickReset}>RESET</button>
             <span> {usedCount}개/{usedMeso.toLocaleString('ko-KR')}메소/등급업확률(
                 { isMiracle ? (cubes[selectedCube].chance[cubeGrade] ?? 0 )* 2 
                 : cubes[selectedCube].chance[cubeGrade] ?? 0 }%)</span>
-            <div id="logBox" style={{'border-color': color}} >
+            <div id="logBox" style={{'borderColor': color}} >
                 {logs.map((log, index)=>
                     <h5 className={"log "+log.grade} key={index}>{log.message}</h5>
                 )}
