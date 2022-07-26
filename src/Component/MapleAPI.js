@@ -2,36 +2,47 @@ import { useState } from "react";
 
 function MapleAPI(){
 
-    const [inputId, setInputId] = useState(0);
+    const [inputNick, setInputNick] = useState('');
     const [name, setName] = useState("");
-    
-    async function sendID(){
+    const [charIMG, setCharIMG] = useState('');
+
+    async function sendNick(){
         let data = await (await fetch("http://localhost:3001/data", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            "id": inputId
+            "Nick": inputNick
           }),
           
         })).json();
-        console.log(data);
-        setName(data.data);
+        
+        if(data.error) {
+          console.log("서버오류: ",data.error);
+          return;
+        }
+        setCharIMG(data.AvatarImgURL._text);
+        // setName(data.data);
     };
 
 
 
     function changeInput(e){
-        setInputId(e.target.value);
+        setInputNick(e.target.value);
+    }
+    function DownEnterKey(e){
+      if(e.key === 'Enter') sendNick();
     }
 
     return (
         <div>
-            <input type="number" value={inputId} onChange={changeInput}></input>
-            <button onClick={sendID}> 입력</button>
+            <input value={inputNick} onChange={changeInput} onKeyDown={DownEnterKey}></input>
+            <button onClick={sendNick}> 입력</button>
             <hr />
             {name}
+            <hr />
+            <img src={charIMG}></img>
         </div>
     );
 }
