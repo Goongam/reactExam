@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/reactExam/static/css/main.879110f6.css",
-    "main.js": "/reactExam/static/js/main.5365b763.js",
+    "main.css": "/reactExam/static/css/main.e3b31b6c.css",
+    "main.js": "/reactExam/static/js/main.d27097d6.js",
     "index.html": "/reactExam/index.html",
-    "main.879110f6.css.map": "/reactExam/static/css/main.879110f6.css.map",
-    "main.5365b763.js.map": "/reactExam/static/js/main.5365b763.js.map"
+    "main.e3b31b6c.css.map": "/reactExam/static/css/main.e3b31b6c.css.map",
+    "main.d27097d6.js.map": "/reactExam/static/js/main.d27097d6.js.map"
   },
   "entrypoints": [
-    "static/css/main.879110f6.css",
-    "static/js/main.5365b763.js"
+    "static/css/main.e3b31b6c.css",
+    "static/js/main.d27097d6.js"
   ]
 }
