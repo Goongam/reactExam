@@ -1,6 +1,39 @@
 .App {
   text-align: center;
 }
+.router{
+  background-color: #61dafb;
+}
+
+body{
+  margin: 0;
+}
+
+.warp{
+  display: flex;
+}
+
+.Navigator{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  background-color: #f1f1f1;
+  overflow: auto;
+  float: left;
+}
+
+.container{
+
+}
+
+.body > div {
+  padding: 10px;
+}
+
+/* .Navigator > li {
+  display: ;
+} */
 
 .black-nav{
   background-color: black;
@@ -10,6 +43,7 @@
   padding: 20px;
   font-weight: 600;
   font-size: 20px;
+  /* margin-left: 100px; */
 }
 
 .list{

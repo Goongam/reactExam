@@ -21,41 +21,47 @@ function App() {
   
 
   return (
-   <div>
+   <>
     
     <Router>
-
-      <Link to="/TodoList">TodoList</Link> | 
-      <Link to="/CubeSimul">CubeSimul</Link> | 
-      <Link to="/Coin">Coin</Link> | 
-      <Link to="/Maple">Maple</Link>
-
-      <Switch>
-        <Route path="/TodoList">
-          <ShowTodoList />
-        </Route>
+      <header className='black-nav'>Goongam</header>
+      <div className='warp'>
+        <div className='Navigator'>
+          <li><Link to="/TodoList">TodoList</Link></li>
+          <li><Link to="/CubeSimul">CubeSimul</Link></li>
+          <li><Link to="/Coin">Coin</Link></li>
+          <li><Link to="/Maple">Maple</Link></li>
+        </div>
         
-        <Route path="/CubeSimul">
-          <CubeSimul />
-        </Route>
+        <div className='container'>
+        <Switch>
+          <Route path="/TodoList">
+            <ShowTodoList />
+          </Route>
+          
+          <Route path="/CubeSimul">
+            <CubeSimul />
+          </Route>
 
-        <Route path="/Coin">
-          <CoinTracker />
-        </Route>
+          <Route path="/Coin">
+            <CoinTracker />
+          </Route>
 
-        <Route path="/Maple">
-          <MapleAPI />
-        </Route>
-      </Switch>
+          <Route path="/Maple">
+            <MapleAPI />
+          </Route>
+        </Switch>
 
-      
+        </div>
+      </div>
+      <footer>Footer</footer>
     </Router>
     
     {
       
     }
 
-   </div>
+   </>
   );
 }
 
