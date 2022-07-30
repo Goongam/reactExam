@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import CoinTracker from './Component/CoinTracker';
 import CubeSimul from './Component/CubeSimul';
 import ShowTodoList from './Component/TodoList';
-import MapleAPI from './Component/MapleAPI';
+import Maple from './Component/MapleAPI';
+import MapleCrawler from "./Component/MapleCrawler";
 
 import {
   BrowserRouter as Router,
@@ -30,7 +31,8 @@ function App() {
           <li><Link to="/TodoList">TodoList</Link></li>
           <li><Link to="/CubeSimul">CubeSimul</Link></li>
           <li><Link to="/Coin">Coin</Link></li>
-          <li><Link to="/Maple">Maple</Link></li>
+          <li><Link to="/MapleAPI">MapleAPI</Link></li>
+          <li><Link to="/MapleCrawler/${}">MapleSearch</Link></li>
         </div>
         
         <div className='container'>
@@ -47,8 +49,12 @@ function App() {
             <CoinTracker />
           </Route>
 
-          <Route path="/Maple">
-            <MapleAPI />
+          <Route path="/MapleAPI">
+            <Maple />
+          </Route>
+          
+          <Route path="/MapleCrawler">
+            <MapleCrawler />
           </Route>
         </Switch>
 
