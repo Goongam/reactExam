@@ -9,8 +9,10 @@ import ShowTodoList from './Component/TodoList';
 import Maple from './Component/MapleAPI';
 import MapleCrawler from "./Component/MapleCrawler";
 import ViewCrawlingData from "./Component/ViewCrawlingData";
+import Chart from './Component/Chart';
 import MainPage from './Component/MainPage';
 import NotFound from './Component/NotFound';
+
 
 import {
   BrowserRouter as Router,
@@ -36,6 +38,7 @@ function App() {
           <li><Link to="/Coin">Coin</Link></li>
           <li><Link to="/MapleAPI">MapleAPI</Link></li>
           <li><Link to="/MapleCrawler">MapleSearch</Link></li>
+          <li><Link to="/Chart">Chart</Link></li>
         </div>
         
         <div className='container'>
@@ -69,6 +72,9 @@ function App() {
             <MapleCrawler />
           </Route>
 
+          <Route path="/Chart">
+            <Chart />
+          </Route>
           
 
           <Route path="*">

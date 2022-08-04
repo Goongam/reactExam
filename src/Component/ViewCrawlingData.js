@@ -1,5 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+  import { Line } from 'react-chartjs-2';
+  
+
+export const options = {
+responsive: true,
+plugins: {
+    legend: {
+    position: 'top',
+    },
+    title: {
+    display: true,
+    text: '레벨 그래프',
+    },
+},
+};
+  
 
 
 
@@ -8,12 +26,31 @@ function ViewCrawlingData(){
     const [exps, setExps] = useState([]);
     const [levs, setLevs] = useState([]);
     const [totalRanks, setTotalRanks] = useState([]);
-    const [dates, setDates] = useState([]);
+    const [dates, setDates] = useState([1,2,3]);
     const [unionRank, setUnionRank] = useState("");
     const [unionLev, setUnionLev] = useState("");
     
     const [errorMSG , setErrorMSG] = useState("");
     const [loading, setLoading] = useState(true);
+
+ 
+    const data = {
+        labels: [...dates].reverse(),
+        datasets: [
+            {
+            label: '레벨',
+            data: [...levs].reverse(),
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            // {
+            //     label: '경험치',
+            //     data: data2.map(v=>v*v),
+            //     borderColor: 'rgb(53, 162, 235)',
+            //     backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            // },
+        ],
+    };
     
     async function fetchData(){
         setErrorMSG("");
@@ -63,7 +100,12 @@ function ViewCrawlingData(){
                 <p>{dates.map((value, index)=>value+" / ")}</p>
                 <p>유니온 랭크:{unionRank}</p>
                 <p>유니온 레벨:{unionLev}</p>
-            </div> 
+
+
+                <Line options={options} data={data} />
+
+            </div>
+            
           }
         </>
     );
