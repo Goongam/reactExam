@@ -1,21 +1,33 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import {Chart} from 'chart.js/auto'; //Bar에러 시 import 
   import { Line } from 'react-chartjs-2';
   
 
 export const options = {
-responsive: true,
-plugins: {
-    legend: {
-    position: 'top',
+    responsive: true,
+    plugins: {
+        legend: {
+        position: 'top',
+        },
+        title: {
+        display: true,
+        text: '레벨 그래프',
+        },
     },
-    title: {
-    display: true,
-    text: '레벨 그래프',
-    },
-},
+    scales: {
+        y:{
+            axis: 'y',
+            display: true,
+            position: 'left',
+            
+        },
+        y_sub:{
+            position: 'right',
+    
+        }
+      },
 };
   
 
@@ -26,10 +38,11 @@ function ViewCrawlingData(){
     const [exps, setExps] = useState([]);
     const [levs, setLevs] = useState([]);
     const [totalRanks, setTotalRanks] = useState([]);
-    const [dates, setDates] = useState([1,2,3]);
+    const [dates, setDates] = useState([]);
     const [unionRank, setUnionRank] = useState("");
     const [unionLev, setUnionLev] = useState("");
-    
+    const [charimg, setCharImg] = useState("");
+
     const [errorMSG , setErrorMSG] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -43,15 +56,18 @@ function ViewCrawlingData(){
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
-            // {
-            //     label: '경험치',
-            //     data: data2.map(v=>v*v),
-            //     borderColor: 'rgb(53, 162, 235)',
-            //     backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            // },
+            {
+                type: 'bar',
+                label: '경험치',
+                data: [...exps].map(exp=>+exp.replace(/,/g, "")).reverse(),
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                yAxisID: 'y_sub'
+            },
         ],
     };
-    
+
+
     async function fetchData(){
         setErrorMSG("");
 
@@ -62,10 +78,14 @@ function ViewCrawlingData(){
             const unionData = await fetch(`http://localhost:3001/MapleCrawling/union/${nick}`);
             const unionjson = await unionData.json();
             
+            const infoData = await fetch(`http://localhost:3001/MapleCrawling/info/${nick}`);
+            const infojson = await infoData.json();
+
             setDates(rankjson.Rank.Dates);
             setLevs(rankjson.Rank.Levs);
             setTotalRanks(rankjson.Rank.TotalRanks);
             setExps(rankjson.Rank.Exps);
+            setCharImg(infojson.info.Img);
 
             if(unionjson.Union === "NoRankInfo"){
                 setUnionRank("정보없음");
@@ -94,6 +114,7 @@ function ViewCrawlingData(){
             errorMSG !== "" ? errorMSG :
             <div>
                 {nick}
+                <p><img src={charimg}></img></p>
                 <p>{exps.map((value, index)=>value+" / ")}</p>
                 <p>{levs.map((value, index)=>value+" / ")}</p>
                 <p>{totalRanks.map((value, index)=>value+" / ")}</p>
