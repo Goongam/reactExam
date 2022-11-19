@@ -12,7 +12,7 @@ import ViewCrawlingData from "./Component/ViewCrawlingData";
 import Chart from './Component/Chart';
 import MainPage from './Component/MainPage';
 import NotFound from './Component/NotFound';
-
+import TextEditor from './Component/TextEditor';
 
 import {
   BrowserRouter as Router,
@@ -39,6 +39,7 @@ function App() {
           <li><Link to="/MapleAPI">MapleAPI</Link></li>
           <li><Link to="/MapleCrawler">MapleSearch</Link></li>
           <li><Link to="/Chart">Chart</Link></li>
+          <li><Link to="/TextEditor">TextEditor</Link></li>
         </div>
         
         <div className='container'>
@@ -74,6 +75,10 @@ function App() {
 
           <Route path="/Chart">
             <Chart />
+          </Route>
+
+          <Route path="/TextEditor">
+            <TextEditor />
           </Route>
           
 
