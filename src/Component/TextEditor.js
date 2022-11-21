@@ -1,5 +1,5 @@
 import ReactQuill from "react-quill";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, createElement } from "react";
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -47,10 +47,9 @@ function TextEditor(){
 
                 quill?.clipboard.dangerouslyPasteHTML(
                     range,
-                    `<img src=${url} alt="이미지 태그가 삽입됩니다." />`
+                    `<img src=${url}/>`
                 );
             }
-            // console.log(formData);
             return ;
         }
       }
@@ -71,9 +70,9 @@ function TextEditor(){
               ],
               ["image", "video"],
             ],
-            // handlers: {
-            //   image: handler,
-            // },
+            handlers: {
+              image: handler,
+            },
           },
         }),
         []
@@ -130,54 +129,79 @@ function TextEditor(){
   // quill에서 사용할 모듈을 설정하는 코드 입니다.
   // 원하는 설정을 사용하면 되는데, 저는 아래와 같이 사용했습니다.
   // useMemo를 사용하지 않으면, 키를 입력할 때마다, imageHandler 때문에 focus가 계속 풀리게 됩니다.
-  function createElementFromHTML(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-  
-    // Change this to div.childNodes to support multiple top-level nodes.
-    return div;
-  }
 
 
-  function DataURIToBlob(dataURI) {
-    const splitDataURI = dataURI.split(',')
-    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
-    const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
-
-    const ia = new Uint8Array(byteString.length)
-    for (let i = 0; i < byteString.length; i++)
-        ia[i] = byteString.charCodeAt(i)
-
-    return new Blob([ia], { type: mimeString })
-  }
 
 
-  const submit = ()=>{
-    let contentHTML = createElementFromHTML(contents)
-    let imglist = contentHTML.querySelectorAll('img');
+//전송시 이미지 url 변환
+  // function createElementFromHTML(htmlString) {
+  //   var div = document.createElement('div');
+  //   div.innerHTML = htmlString.trim();
+
+  //   // Change this to div.childNodes to support multiple top-level nodes.
+  //   return div;
+  // }
+
+  // function DataURIToBlob(dataURI) {
+  //   const splitDataURI = dataURI.split(',')
+  //   const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+  //   const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
+
+  //   const ia = new Uint8Array(byteString.length)
+  //   for (let i = 0; i < byteString.length; i++)
+  //       ia[i] = byteString.charCodeAt(i)
+
+  //   return new Blob([ia], { type: mimeString })
+  // }
+
+  // const submit = async ()=>{
+  //   let contentHTML = createElementFromHTML(contents)
+  //   let imglist = contentHTML.querySelectorAll('img');
     
-    imglist.forEach(async (node) => { //각 img src link로 변경
-      const blob = DataURIToBlob(node.src);
-      const formData = new FormData();
-      const file = new File([blob], `image.${node.src.match('(?<=data:image/)(.*?)(?=;)')[0]}`,{ type: "image/png" })
-      formData.append('image', file);
-      // formData.append('path', 'temp/') //other param
-      // formData.append("image", file);
+  //   imglist.forEach(async (node) => { //각 img src link로 변경
+  //     const blob = DataURIToBlob(node.src);
+  //     const formData = new FormData();
+  //     const file = new File([blob], `image.${node.src.match('(?<=data:image/)(.*?)(?=;)')[0]}`,{ type: "image/png" })
+  //     formData.append('image', file);
+  //     // formData.append('path', 'temp/') //other param
+  //     // formData.append("image", file);
       
       
-      const url = await fetch('http://localhost:3001/uploadImage',{
-        method: 'POST',
-        body: formData,
-      }).then((data)=>data.json())
-      .then((json)=>json.imgURL);
+  //     const url = await fetch('http://localhost:3001/uploadImage',{
+  //       method: 'POST',
+  //       body: formData,
+  //     }).then((data)=>data.json())
+  //     .then((json)=>json.imgURL);
 
-      node.src = url;
+  //     node.src = url;
+  //   });
+
+  //   //HTML내용 서버에 보내기
+  //   let string = contentHTML.innerHTML;
+  //   console.log(contentHTML);
+
+    
+  //     await fetch("http://localhost:3001/TestNewArticle", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         "content":contentHTML.innerHTML,})
+  //     });
+  // }
+
+  const submit = async ()=>{
+    console.log(contents);
+    await fetch("http://localhost:3001/TestNewArticle", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "content":contents})
     });
-
-    //HTML내용 서버에 보내기
-    console.log(contentHTML);
   }
-
 
   return (
       <>
@@ -189,6 +213,7 @@ function TextEditor(){
                   theme="snow"
                   placeholder="내용을 입력해주세요."/>
         <button onClick={submit} className="btn">확인</button>
+        
       </>
   );
 }
