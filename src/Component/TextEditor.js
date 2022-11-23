@@ -2,7 +2,7 @@ import ReactQuill from "react-quill";
 import { useState, useRef, useMemo, createElement } from "react";
 
 import 'react-quill/dist/quill.snow.css';
-
+import './css/textEditor.css';
 
 
 function TextEditor(){
@@ -217,5 +217,4 @@ function TextEditor(){
       </>
   );
 }
-
 export default TextEditor;
