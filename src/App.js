@@ -13,6 +13,8 @@ import Chart from './Component/Chart';
 import MainPage from './Component/MainPage';
 import NotFound from './Component/NotFound';
 import TextEditor from './Component/TextEditor';
+import Prefetching from './Component/Prefetching';
+import MapleCubeAPI from './Component/MapleCubeAPI';
 
 import {
   BrowserRouter as Router,
@@ -21,14 +23,16 @@ import {
   Link
 } from "react-router-dom";
 
+import { QueryClient , QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 function App() {
   
-  
+  const queryClient = new QueryClient();
 
   return (
    <>
-    
+    <QueryClientProvider client={queryClient}>
     <Router>
       <header className='black-nav'><Link to="/reactExam">Goongam</Link></header>
       <div className='warp'>
@@ -40,6 +44,8 @@ function App() {
           <li><Link to="/MapleCrawler">MapleSearch</Link></li>
           <li><Link to="/Chart">Chart</Link></li>
           <li><Link to="/TextEditor">TextEditor</Link></li>
+          <li><Link to="/Prefetching">Prefetching</Link></li>
+          <li><Link to="/MapleCubeAPI">MapleCubeAPI</Link></li>
         </div>
         
         <div className='container'>
@@ -81,6 +87,13 @@ function App() {
             <TextEditor />
           </Route>
           
+          <Route path="/Prefetching">
+            <Prefetching />
+          </Route>
+
+          <Route path="/MapleCubeAPI">
+            <MapleCubeAPI />
+          </Route>
 
           <Route path="*">
             <NotFound />
@@ -92,10 +105,8 @@ function App() {
       <footer>Footer</footer>
     </Router>
     
-    {
-      
-    }
-
+    <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
    </>
   );
 }
