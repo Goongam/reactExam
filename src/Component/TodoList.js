@@ -1,11 +1,25 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 
+async function getData(isNull){
+  if(isNull === "null") return "널";
+  return new Promise((resolve)=>{
+    setTimeout(()=>{
+      resolve("data");
+    },1000);
+  });
+}
 
 function ShowTodoList(){
 
     const [todoList, setTodoList] = useState([]);
     const [inputTodo, setInputTodo] = useState('');
     
+    const {data} = useQuery(["key1"],()=>getData(data),{
+      initialData: "init"
+    });
+    console.log(data);
+
     const addTodoList = ()=>{
         setTodoList((currentList)=> [inputTodo,...currentList]);
         setInputTodo('');

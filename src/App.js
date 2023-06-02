@@ -15,7 +15,8 @@ import NotFound from './Component/NotFound';
 import TextEditor from './Component/TextEditor';
 import Prefetching from './Component/Prefetching';
 import MapleCubeAPI from './Component/MapleCubeAPI';
-
+import KakaoLogin from './Component/KakaoLogin';
+import Success from './Component/oauth/Success';
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,6 +26,7 @@ import {
 
 import { QueryClient , QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import ContextTestComp from './Component/ContextTestComp';
 
 function App() {
   
@@ -46,6 +48,9 @@ function App() {
           <li><Link to="/TextEditor">TextEditor</Link></li>
           <li><Link to="/Prefetching">Prefetching</Link></li>
           <li><Link to="/MapleCubeAPI">MapleCubeAPI</Link></li>
+          <li><Link to='/KakaoLogin'>KakaoLogin</Link></li>
+          <li><Link to='/ContextTest'>ContextTest</Link></li>
+          {/* <li><Link to='/success'>Success</Link></li> */}
         </div>
         
         <div className='container'>
@@ -93,6 +98,18 @@ function App() {
 
           <Route path="/MapleCubeAPI">
             <MapleCubeAPI />
+          </Route>
+
+          <Route path={'/KakaoLogin'}>
+            <KakaoLogin />
+          </Route>
+
+          <Route path={'/ContextTest'}>
+            <ContextTestComp />
+          </Route>
+
+          <Route path={'/success'}>
+            <Success />
           </Route>
 
           <Route path="*">
